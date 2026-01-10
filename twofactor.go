@@ -58,6 +58,7 @@ func (info *TwoFactorInfo) Login2FA(in ...string) error {
 		map[string]string{
 			"verification_code":     code,
 			"phone_id":              insta.fID,
+			"_csrftoken":            insta.token,
 			"two_factor_identifier": info.TwoFactorIdentifier,
 			"username":              insta.user,
 			"trust_this_device":     "1",
