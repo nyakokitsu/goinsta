@@ -9,6 +9,7 @@ const (
 	instaAPIUrlb   = "https://b.i.instagram.com/api/v1/"
 	instaAPIUrlv2  = "https://i.instagram.com/api/v2/"
 	instaAPIUrlv2b = "https://b.i.instagram.com/api/v2/"
+	instaAPI2FA    = "https://www.instagram.com/api/v1/web/"
 
 	// header values
 	bloksVerID         = "927f06374b80864ae6a0b04757048065714dc50ff15d2b8b3de8d0b6de961649"
