@@ -57,14 +57,11 @@ func (info *TwoFactorInfo) Login2FA(in ...string) error {
 	data, err := json.Marshal(
 		map[string]string{
 			"verification_code":     code,
-			"phone_id":              insta.fID,
-			"_csrftoken":            insta.token,
-			"two_factor_identifier": info.TwoFactorIdentifier,
+			"identifier":            info.TwoFactorIdentifier,
+			"isPrivacyPortalReq":    false,
 			"username":              insta.user,
-			"trust_this_device":     "1",
-			"guid":                  insta.uuid,
-			"device_id":             insta.dID,
-			"waterfall_id":          generateUUID(),
+			"trust_signal":          true,
+			"jazoest":               jazoest(insta.dID),
 			"verification_method":   "3",
 		},
 	)
@@ -73,7 +70,8 @@ func (info *TwoFactorInfo) Login2FA(in ...string) error {
 	}
 	body, _, err := insta.sendRequest(
 		&reqOptions{
-			Endpoint: url2FALogin,
+			Endpoint: "accounts/login/ajax/two_factor/",
+			Use2FA:   true,
 			IsPost:   true,
 			Query:    generateSignature(data),
 			IgnoreHeaders: []string{
