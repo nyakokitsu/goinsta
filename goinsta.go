@@ -783,15 +783,14 @@ func (insta *Instagram) login() error {
 	result, err := json.Marshal(
 		map[string]interface{}{
 			"jazoest":             jazoest(insta.dID),
-			"country_code":        "[{\"country_code\":\"44\",\"source\":[\"default\"]}]",
-			"phone_id":            insta.fID,
 			"enc_password":        encrypted,
 			"username":            insta.user,
-			"adid":                insta.adid,
-			"guid":                insta.uuid,
-			"device_id":           insta.dID,
-			"google_tokens":       "[]",
 			"login_attempt_count": 0,
+			"caaF2DebugGroup":     0,
+			"isPrivacyPortalReq":  false,
+			"optIntoOneTap":       false,
+			"queryParams":         `{"next":"https://www.instagram.com/accounts/onetap/?next=%2F&__coig_login=1"}`,
+			"trustedDeviceRecords": "{}"
 		},
 	)
 	if err != nil {
@@ -799,9 +798,10 @@ func (insta *Instagram) login() error {
 	}
 	body, _, err := insta.sendRequest(
 		&reqOptions{
-			Endpoint: urlLogin,
-			Query:    map[string]string{"signed_body": "SIGNATURE." + string(result)},
+			Endpoint: "accounts/login/ajax/",
+			Query:    string(result),
 			IsPost:   true,
+			Use2FA:   true,
 			IgnoreHeaders: []string{
 				"Ig-U-Shbts",
 				"Ig-U-Shbid",
