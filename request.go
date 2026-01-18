@@ -38,6 +38,9 @@ type reqOptions struct {
 	// UseV2 is set when API endpoint uses v2 url.
 	UseV2 bool
 
+	// Use new endpoint for 2FA
+	Use2FA bool
+
 	// Use b.i.instagram.com
 	Useb bool
 
@@ -107,6 +110,9 @@ func (insta *Instagram) sendRequest(o *reqOptions) (body []byte, h http.Header, 
 		nu = instaAPIUrlb
 	} else {
 		nu = instaAPIUrl
+	}
+	if o.Use2FA {
+		nu = instaAPI2FA
 	}
 	if o.UseV2 && !o.Useb {
 		nu = instaAPIUrlv2
